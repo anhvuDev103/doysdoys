@@ -77,4 +77,25 @@ export default defineConfig({
     "paths": {
       "@*": ["./*"]
 }
+
+
+// Config husky & lint-staged
+yarn add -D lint-staged husky
+
+// add `lint-staged` key to object of `package.json`:
+"lint-staged":
+{
+    "src/**/*.{ts,tsx,css,scss}": "yarn prettier:fix",
+    "src/**/*.{ts,tsx}": "yarn lint:fix"
+}
+
+run `npx husky-init`
+add hooks into .husky/pre-commit
+
+yarn add -D @commitlint/config-conventional @commitlint/cli
+echo "export default {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+yarn husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
+
+#note:
+- bug commit-msg: "https://stackoverflow.com/questions/63244379/how-to-fix-syntaxerror-invalid-or-unexpected-token-when-trying-to-run-node-js"
 ```
