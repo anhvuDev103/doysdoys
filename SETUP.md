@@ -98,4 +98,41 @@ yarn husky add .husky/commit-msg 'npx --no -- commitlint --edit ${1}'
 
 #note:
 - bug commit-msg: "https://stackoverflow.com/questions/63244379/how-to-fix-syntaxerror-invalid-or-unexpected-token-when-trying-to-run-node-js"
+
+//add sort import/export
+run `yarn add -D eslint-plugin-simple-import-sort`
+add ["simple-import-sort"] to `plugins` in `.eslintrc.cjs`
+add {
+  "simple-import-sort/imports": "error",
+  "simple-import-sort/exports": "error",
+} to `rules` in `.eslintrc.cjs`
+add `overrides`: [
+    // override "simple-import-sort" config
+    {
+      files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      rules: {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            groups: [
+              // Packages `react` related packages come first.
+              ["^react", "^\\w"],
+              // Internal packages. (configs myself)
+              // ["^@?\\w.+\\.?(scss)$"],
+              // Internal packages.
+              ["^(@|components)(/.*|$)"],
+              // Side effect imports.
+              ["^\\u0000"],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Style imports.
+              ["^.+\\.?(css)$", "^.+\\.?(scss)$"],
+            ],
+          },
+        ],
+      },
+    },
+  ] to object in `.eslintrc.cjs`
 ```
