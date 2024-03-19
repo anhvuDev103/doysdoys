@@ -9,7 +9,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'prettier', 'simple-import-sort'],
+  plugins: ['react-refresh', 'prettier', 'simple-import-sort', 'import'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -38,35 +38,11 @@ module.exports = {
       }
     ],
     'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error'
-  },
-  overrides: [
-    // override "simple-import-sort" config
-    {
-      files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
-      rules: {
-        'simple-import-sort/imports': [
-          'error',
-          {
-            groups: [
-              // Packages `react` related packages come first.
-              ['^react', '^\\w'],
-              // Internal packages. (configs myself)
-              // ["^@?\\w.+\\.?(scss)$"],
-              // Internal packages.
-              ['^(@|components)(/.*|$)'],
-              // Side effect imports.
-              ['^\\u0000'],
-              // Parent imports. Put `..` last.
-              ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-              // Other relative imports. Put same-folder imports and `.` last.
-              ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-              // Style imports.
-              ['^.+\\.?(css)$', '^.+\\.?(scss)$']
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    'simple-import-sort/exports': 'warn',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-named-as-default': 'error',
+    'import/no-unresolved': 'warn'
+  }
 };
