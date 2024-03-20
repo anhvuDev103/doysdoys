@@ -1,4 +1,5 @@
 import './App.css';
+
 import AppGlobalStyles from '@contexts/AppGlobalStyles';
 import { Button, Paper, Typography } from '@mui/material';
 
