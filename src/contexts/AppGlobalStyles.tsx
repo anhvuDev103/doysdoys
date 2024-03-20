@@ -1,10 +1,15 @@
-import { ThemeProvider, createTheme } from '@mui/material';
-import { getDesignTokens, getThemedComponents } from '@utils/themes';
-import { ReactNode, createContext, useMemo, useState } from 'react';
+import {
+  createTheme,
+  CssBaseline,
+  GlobalStyles,
+  ThemeProvider,
+} from '@mui/material';
 import { deepmerge } from '@mui/utils';
+import { getDesignTokens, getThemedComponents } from '@utils/themes';
+import { createContext, ReactNode, useMemo, useState } from 'react';
 
 const ColorModeContext = createContext({
-  toggleColorMode: () => {}
+  toggleColorMode: () => {},
 });
 
 export type Mode = 'dark' | 'light';
@@ -18,7 +23,7 @@ const AppGlobalStyles = ({ children }: { children: ReactNode }) => {
         const newMode = prevMode === 'light' ? 'dark' : 'light';
         return newMode;
       });
-    }
+    },
   };
 
   const theme = useMemo(() => {
@@ -28,7 +33,17 @@ const AppGlobalStyles = ({ children }: { children: ReactNode }) => {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyles
+          styles={(theme) => ({
+            body: {
+              backgroundColor: theme.palette.background.default,
+            },
+          })}
+        />
+        {children}
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 };

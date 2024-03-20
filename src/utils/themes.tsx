@@ -1,3 +1,4 @@
+import { CheckBoxIcon, CheckedBoxIcon } from '@components/icons';
 import { Mode } from '@contexts/AppGlobalStyles';
 import { Theme, ThemeOptions } from '@mui/material';
 
@@ -78,115 +79,116 @@ export const getDesignTokens = (mode: Mode) => {
         sm: 640,
         md: 768,
         lg: 1024,
-        xl: 1280
-      }
+        xl: 1280,
+      },
     },
     typography: {
       fontFamily: FONT,
       h1: {
         fontWeight: 400,
         fontSize: 48,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h2: {
         fontWeight: 400,
         fontSize: 40,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h3: {
         fontWeight: 400,
         fontSize: 33,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h4: {
         fontWeight: 400,
         fontSize: 28,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h5: {
         fontWeight: 400,
         fontSize: 23,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       title1: {
         fontWeight: 400,
         fontSize: 19,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       title2: {
         fontWeight: 400,
         fontSize: 16,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       body: {
         fontWeight: 400,
         fontSize: 13,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       caption: {
         fontWeight: 400,
         fontSize: 11,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h1Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 48,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h2Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 40,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h3Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 33,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h4Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 28,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       h5Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 23,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       title1Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 19,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       title2Bold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 16,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       bodyBold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 13,
-        lineHeight: '140%'
+        lineHeight: '140%',
       },
       captionBold: {
-        fontWeight: 500,
+        fontWeight: 700,
         fontSize: 11,
-        lineHeight: '140%'
-      }
+        lineHeight: '140%',
+      },
     },
+    spacing: 4,
     palette: {
       mode,
       primary: {
         main: getColor('#b286fd', '#b286fd'),
-        contrastText: getColor('#000000', '#000000')
+        contrastText: getColor('#000000', '#000000'),
       },
       background: {
         default: getColor('#f4f4f0', '#f4f4f0'),
-        paper: getColor('#ffffff', '#ffffff')
+        paper: getColor('#ffffff', '#ffffff'),
       },
       text: {
         primary: getColor('#000000', '#000000'),
-        secondary: getColor('#666666', '#666666')
+        secondary: getColor('#666666', '#666666'),
       },
       common: {
         gray: '#666666',
@@ -194,9 +196,9 @@ export const getDesignTokens = (mode: Mode) => {
         orange: '#ff7051',
         purple: '#b286fd',
         red: '#e2442f',
-        yellow: '#fabe24'
-      }
-    }
+        yellow: '#fabe24',
+      },
+    },
   } as ThemeOptions;
 };
 
@@ -209,9 +211,9 @@ export function getThemedComponents(theme: Theme) {
             backgroundColor: theme.palette.background.paper,
             padding: 20,
             borderRadius: 8,
-            boxShadow: `${theme.palette.common.black} 3px 3px 0px 1px`
-          }
-        }
+            boxShadow: `${theme.palette.common.black} 3px 3px 0px 1px`,
+          },
+        },
       },
       MuiButton: {
         styleOverrides: {
@@ -224,17 +226,63 @@ export function getThemedComponents(theme: Theme) {
             boxShadow: `${theme.palette.common.black} 3px 3px 0px 1px`,
 
             '&:hover': {
-              borderColor: theme.palette.common.black
-            }
-          }
-        }
+              borderColor: theme.palette.common.black,
+            },
+          },
+          sizeSmall: {
+            ...theme.typography.bodyBold,
+          },
+        },
       },
       MuiTypography: {
         defaultProps: {
           variant: 'title2',
-          color: theme.palette.text.primary
-        }
-      }
-    }
+          color: theme.palette.text.primary,
+        },
+      },
+      MuiInput: {
+        styleOverrides: {
+          root: {
+            border: '1px solid',
+            borderColor: theme.palette.common.black,
+            backgroundColor: theme.palette.background.default,
+            paddingLeft: 12,
+            paddingRight: 12,
+            paddingTop: 8,
+            paddingBottom: 8,
+            borderRadius: 6,
+            '& .MuiInput-input': {
+              padding: 0,
+              '&::placeholder': {
+                color: theme.palette.common.gray,
+              },
+            },
+            '&::before': {
+              content: 'normal',
+            },
+            '&::after': {
+              content: 'normal',
+            },
+            '&.Mui-focused': {
+              boxShadow: `${theme.palette.primary.main} 0px 0px 0px 4px`,
+            },
+          },
+        },
+      },
+      MuiCheckbox: {
+        styleOverrides: {
+          root: {
+            padding: 0,
+            '&:hover': {
+              background: 'red',
+            },
+          },
+        },
+        defaultProps: {
+          icon: <CheckBoxIcon />,
+          checkedIcon: <CheckedBoxIcon />,
+        },
+      },
+    },
   } as ThemeOptions;
 }
