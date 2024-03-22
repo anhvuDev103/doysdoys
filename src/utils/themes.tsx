@@ -66,7 +66,20 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-const FONT = '"Space Grotesk", sans-serif';
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    red: true;
+    yellow: true;
+    green: true;
+  }
+
+  interface ButtonPropsSizeOverrides {
+    squared: true;
+    squaredLarge: true;
+  }
+}
+
+export const FONT = '"Outfit", sans-serif';
 
 export const getDesignTokens = (mode: Mode) => {
   const getColor = (darkColor: string, lightColor: string) =>
@@ -199,6 +212,9 @@ export const getDesignTokens = (mode: Mode) => {
         yellow: '#fabe24',
       },
     },
+    shape: {
+      borderRadius: 2,
+    },
   } as ThemeOptions;
 };
 
@@ -210,8 +226,10 @@ export function getThemedComponents(theme: Theme) {
           root: {
             backgroundColor: theme.palette.background.paper,
             padding: 20,
-            borderRadius: 8,
-            boxShadow: `${theme.palette.common.black} 3px 3px 0px 1px`,
+            borderRadius: theme.shape.borderRadius,
+            border: '1px solid',
+            borderColor: theme.palette.common.black,
+            boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
           },
         },
       },
@@ -220,19 +238,91 @@ export function getThemedComponents(theme: Theme) {
           root: {
             outline: 'none',
             color: theme.palette.text.primary,
-            borderRadius: 8,
+            borderRadius: theme.shape.borderRadius,
             border: '1px solid',
             borderColor: theme.palette.common.black,
-            boxShadow: `${theme.palette.common.black} 3px 3px 0px 1px`,
+            boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
+            minWidth: 'unset',
+            ...theme.typography.bodyBold,
 
             '&:hover': {
               borderColor: theme.palette.common.black,
             },
           },
-          sizeSmall: {
-            ...theme.typography.bodyBold,
+          sizeMedium: {
+            padding: '4px 10px',
+          },
+          sizeSquared: {
+            width: 32,
+            height: 32,
+            padding: 6,
+          },
+          sizeSquaredLarge: {
+            width: 36,
+            height: 36,
+            padding: 8,
           },
         },
+        variants: [
+          {
+            props: {
+              variant: 'red',
+            },
+            style: {
+              color: theme.palette.common.white,
+              backgroundColor: theme.palette.common.red,
+            },
+          },
+          {
+            props: {
+              variant: 'yellow',
+            },
+            style: {
+              color: theme.palette.common.black,
+              backgroundColor: theme.palette.common.yellow,
+            },
+          },
+          {
+            props: {
+              variant: 'green',
+            },
+            style: {
+              color: theme.palette.common.white,
+              backgroundColor: theme.palette.common.green,
+            },
+          },
+        ],
+      },
+      MuiSvgIcon: {
+        variants: [
+          {
+            props: {
+              fontSize: 'large',
+            },
+            style: {
+              width: 32,
+              height: 32,
+            },
+          },
+          {
+            props: {
+              fontSize: 'medium',
+            },
+            style: {
+              width: 24,
+              height: 24,
+            },
+          },
+          {
+            props: {
+              fontSize: 'small',
+            },
+            style: {
+              width: 20,
+              height: 20,
+            },
+          },
+        ],
       },
       MuiTypography: {
         defaultProps: {
