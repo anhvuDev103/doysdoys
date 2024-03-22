@@ -6,7 +6,11 @@ interface Props {}
 
 const ContractsList: FC<Props> = () => {
   return (
-    <List>
+    <List
+      sx={{
+        border: 'none',
+      }}
+    >
       {Array(5)
         .fill(null)
         .map((_, k) => (

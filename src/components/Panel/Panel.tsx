@@ -1,12 +1,10 @@
-import { Row } from '@components/primitives';
-import { Box, Paper, styled, Typography } from '@mui/material';
+import { Box, Paper, PaperProps, styled, Typography } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
-interface Props {
+interface Props extends PaperProps {
   label: string | ReactNode;
-  action?: ReactNode;
   children: ReactNode;
-  align?: 'left' | 'center' | 'right';
+  headless?: boolean;
 }
 
 const Label = styled(Box)(({ theme }) => ({
@@ -20,39 +18,22 @@ const Label = styled(Box)(({ theme }) => ({
   rotate: '-16.05deg',
   left: -12,
   top: -10,
+  zIndex: 1,
 }));
 
-const Panel: FC<Props> = ({ label, action, children, align = 'left' }) => {
-  const alignComputed = () => {
-    switch (align) {
-      case 'center':
-        return 'center';
-      case 'left':
-        return 'flex-start';
-      case 'right':
-        return 'flex-end';
-      default:
-        return 'flex-start';
-    }
-  };
-
+const Panel: FC<Props> = ({ label, children, headless, ...props }) => {
   return (
     <Paper
+      {...props}
       sx={{
         position: 'relative',
+        ...props.sx,
       }}
     >
-      <Label>
-        <Typography variant='body'>{label}</Typography>
-      </Label>
-      {action && (
-        <Row
-          sx={{
-            justifyContent: alignComputed(),
-          }}
-        >
-          <Box ml='auto'>{action}</Box>
-        </Row>
+      {!headless && (
+        <Label>
+          <Typography variant='body'>{label}</Typography>
+        </Label>
       )}
       <Box>{children}</Box>
     </Paper>

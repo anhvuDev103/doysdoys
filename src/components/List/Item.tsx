@@ -12,7 +12,7 @@ const Item: FC<Props> = ({ children, ...props }) => {
       sx={{
         px: 5,
         py: 4,
-        borderBottom: '1px solid',
+        borderBottom: '1px dashed',
         borderBottomColor: 'common.black',
         cursor: 'pointer',
         '&:last-child': {

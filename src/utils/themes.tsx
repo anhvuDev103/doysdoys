@@ -229,7 +229,7 @@ export function getThemedComponents(theme: Theme) {
             borderRadius: theme.shape.borderRadius,
             border: '1px solid',
             borderColor: theme.palette.common.black,
-            boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
+            boxShadow: 'none',
           },
         },
       },
@@ -243,7 +243,8 @@ export function getThemedComponents(theme: Theme) {
             borderColor: theme.palette.common.black,
             boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
             minWidth: 'unset',
-            ...theme.typography.bodyBold,
+            textTransform: 'none',
+            ...theme.typography.body,
 
             '&:hover': {
               borderColor: theme.palette.common.black,
@@ -336,11 +337,10 @@ export function getThemedComponents(theme: Theme) {
             border: '1px solid',
             borderColor: theme.palette.common.black,
             backgroundColor: theme.palette.background.default,
-            paddingLeft: 12,
+            boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
+            paddingLeft: 24,
             paddingRight: 12,
-            paddingTop: 8,
-            paddingBottom: 8,
-            borderRadius: 6,
+            borderRadius: theme.shape.borderRadius,
             '& .MuiInput-input': {
               padding: 0,
               '&::placeholder': {
@@ -353,11 +353,25 @@ export function getThemedComponents(theme: Theme) {
             '&::after': {
               content: 'normal',
             },
-            '&.Mui-focused': {
-              boxShadow: `${theme.palette.primary.main} 0px 0px 0px 4px`,
-            },
           },
         },
+        defaultProps: {
+          size: 'medium',
+        },
+        variants: [
+          {
+            props: { size: 'small' },
+            style: {
+              height: 32,
+            },
+          },
+          {
+            props: { size: 'medium' },
+            style: {
+              height: 40,
+            },
+          },
+        ],
       },
       MuiCheckbox: {
         styleOverrides: {
