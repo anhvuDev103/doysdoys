@@ -1,4 +1,3 @@
-import { CheckBoxIcon, CheckedBoxIcon } from '@components/icons';
 import { Item, List } from '@components/List';
 import { Column } from '@components/primitives';
 import { Checkbox, Typography } from '@mui/material';
@@ -11,7 +10,7 @@ const FunctionsList: FC<Props> = () => {
     <List>
       {Array(5)
         .fill(null)
-        .map((i, k) => (
+        .map((_, k) => (
           <Item
             key={k}
             sx={{

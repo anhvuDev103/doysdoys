@@ -5,7 +5,7 @@ import Connection from '@modules/doydoy/connection/Connection';
 import Contracts from '@modules/doydoy/contracts/Contracts';
 import Functions from '@modules/doydoy/functions/Functions';
 import Result from '@modules/doydoy/result/Result';
-import { Box, Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import { FC } from 'react';
 
 interface Props {}

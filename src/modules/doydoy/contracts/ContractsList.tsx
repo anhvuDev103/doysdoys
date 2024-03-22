@@ -9,7 +9,7 @@ const ContractsList: FC<Props> = () => {
     <List>
       {Array(5)
         .fill(null)
-        .map((i, k) => (
+        .map((_, k) => (
           <Item key={k}>
             <Typography variant='title2Bold' component='div'>
               Contract A
