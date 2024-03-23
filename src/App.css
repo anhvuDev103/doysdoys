@@ -3,11 +3,27 @@ html {
 }
 
 body {
+  position: relative;
   flex-direction: column;
+}
+
+* {
 }
 
 #root {
   width: 100%;
   padding: 16px;
   flex: 1;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 24px;
 }

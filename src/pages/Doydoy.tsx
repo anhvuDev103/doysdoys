@@ -1,10 +1,9 @@
 import { Column } from '@components/primitives';
 import MainLayout from '@layouts/MainLayout';
-import Call from '@modules/doydoy/call/Call';
 import Connection from '@modules/doydoy/connection/Connection';
 import Contracts from '@modules/doydoy/contracts/Contracts';
 import Functions from '@modules/doydoy/functions/Functions';
-import Result from '@modules/doydoy/result/Result';
+import InputOutput from '@modules/doydoy/inputOutput/InputOutput';
 import { Box } from '@mui/material';
 import { FC } from 'react';
 
@@ -25,10 +24,7 @@ const Doydoy: FC<Props> = () => {
           <Contracts />
         </Column>
         <Functions />
-        <Box>
-          <Result />
-          <Call />
-        </Box>
+        <InputOutput />
       </Box>
     </MainLayout>
   );

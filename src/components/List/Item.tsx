@@ -18,6 +18,9 @@ const Item: FC<Props> = ({ children, ...props }) => {
         '&:last-child': {
           borderBottomColor: 'transparent',
         },
+        '&:hover': {
+          backgroundColor: 'action.hover',
+        },
         ...props.sx,
       }}
     >

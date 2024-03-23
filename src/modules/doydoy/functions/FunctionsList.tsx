@@ -1,32 +1,30 @@
 import { Item, List } from '@components/List';
-import { Column } from '@components/primitives';
-import { Checkbox, Typography } from '@mui/material';
+import { Checkbox, styled, Typography } from '@mui/material';
 import { FC } from 'react';
 
 interface Props {}
 
+const FunctionItem = styled(Item)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(4),
+  padding: '12px 20px',
+}));
+
 const FunctionsList: FC<Props> = () => {
   return (
-    <List>
+    <List
+      sx={{
+        boxShadow: 1,
+      }}
+    >
       {Array(5)
         .fill(null)
         .map((_, k) => (
-          <Item
-            key={k}
-            sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 3,
-            }}
-          >
+          <FunctionItem key={k}>
             <Checkbox />
-            <Column>
-              <Typography variant='title2Bold' component='div'>
-                Function A
-              </Typography>
-              <Typography variant='body'>Input: 4 | Output: 5</Typography>
-            </Column>
-          </Item>
+            <Typography variant='title1'>Function A</Typography>
+          </FunctionItem>
         ))}
     </List>
   );

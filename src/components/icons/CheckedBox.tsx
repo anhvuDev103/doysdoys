@@ -1,25 +1,33 @@
-import { SvgIcon, SvgIconProps } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
 
-const Icon = (props: SvgIconProps) => {
+import CheckIcon from './Check';
+
+const Icon = (props: BoxProps) => {
   return (
-    <SvgIcon
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
+    <Box
       {...props}
+      sx={{
+        width: 16,
+        height: 16,
+        border: '1px solid',
+        borderColor: 'common.black',
+        borderRadius: '2px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'common.green',
+        padding: '2px',
+        boxShadow: 1,
+        ...props.sx,
+      }}
     >
-      <rect x='0.5' y='0.5' width='23' height='23' rx='5.5' fill='none' />
-      <rect x='0.5' y='0.5' width='23' height='23' rx='5.5' stroke='black' />
-      <path
-        d='M18.6666 7L9.49998 16.1667L5.33331 12'
-        stroke='black'
-        strokeWidth='2'
-        strokeLinecap='round'
-        strokeLinejoin='round'
+      <CheckIcon
+        sx={{
+          width: '12px',
+          height: '12px',
+        }}
       />
-    </SvgIcon>
+    </Box>
   );
 };
 

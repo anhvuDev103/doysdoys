@@ -1,5 +1,7 @@
 import { Panel } from '@components/Panel';
 import { Row } from '@components/primitives';
+import useModal from '@hooks/useModal';
+import AddContract from '@modules/doydoy/modals/AddContract';
 import { Button, styled, Typography } from '@mui/material';
 
 import ContractsList from './ContractsList';
@@ -11,10 +13,13 @@ const StyledContractsListHead = styled(Row)(() => ({
 }));
 
 const ContractsListHead = () => {
+  const [open] = useModal(<AddContract />);
   return (
     <StyledContractsListHead>
       <Typography variant='title2'>Contracts</Typography>
-      <Button variant='yellow'>Add</Button>
+      <Button size='small' variant='yellow' onClick={open}>
+        Add
+      </Button>
     </StyledContractsListHead>
   );
 };

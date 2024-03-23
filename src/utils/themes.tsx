@@ -63,6 +63,7 @@ declare module '@mui/material/styles/createPalette' {
     green: string;
     gray: string;
     purple: string;
+    black60: string;
   }
 }
 
@@ -76,6 +77,12 @@ declare module '@mui/material/Button' {
   interface ButtonPropsSizeOverrides {
     squared: true;
     squaredLarge: true;
+  }
+}
+
+declare module '@mui/material/SvgIcon' {
+  interface SvgIconPropsSizeOverrides {
+    extraSmall: true;
   }
 }
 
@@ -210,11 +217,16 @@ export const getDesignTokens = (mode: Mode) => {
         purple: '#b286fd',
         red: '#e2442f',
         yellow: '#fabe24',
+        black60: '#00000099',
+      },
+      action: {
+        hover: getColor('#0000001a', '#0000001a'),
       },
     },
     shape: {
       borderRadius: 2,
     },
+    shadows: ['none', '#000000 1px 1px 0 0', ...Array(23).fill('none')],
   } as ThemeOptions;
 };
 
@@ -244,14 +256,22 @@ export function getThemedComponents(theme: Theme) {
             boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
             minWidth: 'unset',
             textTransform: 'none',
+            transition: '200ms',
+
             ...theme.typography.body,
 
             '&:hover': {
               borderColor: theme.palette.common.black,
+              opacity: 0.7,
             },
+          },
+          sizeSmall: {
+            height: 'unset',
           },
           sizeMedium: {
             padding: '4px 10px',
+            height: '40px',
+            ...theme.typography.title2,
           },
           sizeSquared: {
             width: 32,
@@ -264,6 +284,9 @@ export function getThemedComponents(theme: Theme) {
             padding: 8,
           },
         },
+        defaultProps: {
+          size: 'medium',
+        },
         variants: [
           {
             props: {
@@ -272,6 +295,10 @@ export function getThemedComponents(theme: Theme) {
             style: {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.common.red,
+
+              '&:hover': {
+                backgroundColor: theme.palette.common.red,
+              },
             },
           },
           {
@@ -281,6 +308,10 @@ export function getThemedComponents(theme: Theme) {
             style: {
               color: theme.palette.common.black,
               backgroundColor: theme.palette.common.yellow,
+
+              '&:hover': {
+                backgroundColor: theme.palette.common.yellow,
+              },
             },
           },
           {
@@ -290,6 +321,10 @@ export function getThemedComponents(theme: Theme) {
             style: {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.common.green,
+
+              '&:hover': {
+                backgroundColor: theme.palette.common.green,
+              },
             },
           },
         ],
@@ -323,6 +358,15 @@ export function getThemedComponents(theme: Theme) {
               height: 20,
             },
           },
+          {
+            props: {
+              fontSize: 'extraSmall',
+            },
+            style: {
+              width: 16,
+              height: 16,
+            },
+          },
         ],
       },
       MuiTypography: {
@@ -336,11 +380,13 @@ export function getThemedComponents(theme: Theme) {
           root: {
             border: '1px solid',
             borderColor: theme.palette.common.black,
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.background.paper,
             boxShadow: `${theme.palette.common.black} 1px 1px 0px 0px`,
             paddingLeft: 24,
             paddingRight: 12,
             borderRadius: theme.shape.borderRadius,
+            ...theme.typography.title2,
+
             '& .MuiInput-input': {
               padding: 0,
               '&::placeholder': {
@@ -352,6 +398,10 @@ export function getThemedComponents(theme: Theme) {
             },
             '&::after': {
               content: 'normal',
+            },
+            '&.MuiInputBase-multiline': {
+              paddingTop: '9px',
+              paddingBottom: '9px',
             },
           },
         },
@@ -371,15 +421,19 @@ export function getThemedComponents(theme: Theme) {
               height: 40,
             },
           },
+          {
+            props: { size: 'medium', multiline: true },
+            style: {
+              height: 'unset',
+            },
+          },
         ],
       },
       MuiCheckbox: {
         styleOverrides: {
           root: {
             padding: 0,
-            '&:hover': {
-              background: 'red',
-            },
+            color: theme.palette.common.white,
           },
         },
         defaultProps: {

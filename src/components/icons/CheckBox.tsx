@@ -1,17 +1,19 @@
-import { SvgIcon, SvgIconProps } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
 
-const Icon = (props: SvgIconProps) => {
+const Icon = (props: BoxProps) => {
   return (
-    <SvgIcon
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
+    <Box
       {...props}
-    >
-      <rect x='0.5' y='0.5' width='23' height='23' rx='5.5' stroke='black' />
-    </SvgIcon>
+      sx={{
+        width: 16,
+        height: 16,
+        border: '1px solid',
+        borderColor: 'common.black',
+        borderRadius: '2px',
+        boxShadow: 1,
+        ...props.sx,
+      }}
+    />
   );
 };
 

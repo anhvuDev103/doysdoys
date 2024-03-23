@@ -1,10 +1,18 @@
-import { Box, Paper, PaperProps, styled, Typography } from '@mui/material';
+import {
+  Box,
+  BoxProps,
+  Paper,
+  PaperProps,
+  styled,
+  Typography,
+} from '@mui/material';
 import { FC, ReactNode } from 'react';
 
 interface Props extends PaperProps {
-  label: string | ReactNode;
+  label?: string | ReactNode;
   children: ReactNode;
   headless?: boolean;
+  contentProps?: BoxProps;
 }
 
 const Label = styled(Box)(({ theme }) => ({
@@ -21,7 +29,13 @@ const Label = styled(Box)(({ theme }) => ({
   zIndex: 1,
 }));
 
-const Panel: FC<Props> = ({ label, children, headless, ...props }) => {
+const Panel: FC<Props> = ({
+  label,
+  children,
+  headless,
+  contentProps,
+  ...props
+}) => {
   return (
     <Paper
       {...props}
@@ -35,7 +49,7 @@ const Panel: FC<Props> = ({ label, children, headless, ...props }) => {
           <Typography variant='body'>{label}</Typography>
         </Label>
       )}
-      <Box>{children}</Box>
+      <Box {...contentProps}>{children}</Box>
     </Paper>
   );
 };
