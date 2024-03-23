@@ -374,6 +374,40 @@ export function getThemedComponents(theme: Theme) {
           variant: 'title2',
           color: theme.palette.text.primary,
         },
+        styleOverrides: {
+          root: {
+            userSelect: 'none',
+          },
+        },
+      },
+      MuiTooltip: {
+        defaultProps: {
+          arrow: true,
+        },
+        styleOverrides: {
+          popper: {
+            '& .MuiTooltip-tooltip': {
+              paddingLeft: 16,
+              paddingRight: 16,
+              paddingTop: 12,
+              paddingBottom: 12,
+              backgroundColor: theme.palette.common.white,
+              color: theme.palette.common.black,
+              border: '1px solid',
+              borderColor: theme.palette.common.black,
+              borderRadius: theme.shape.borderRadius,
+
+              ...theme.typography.body2,
+            },
+            '& .MuiTooltip-arrow': {
+              color: theme.palette.common.black,
+              borderRadius: theme.shape.borderRadius,
+              '&::before': {
+                borderRadius: theme.shape.borderRadius,
+              },
+            },
+          },
+        },
       },
       MuiInput: {
         styleOverrides: {

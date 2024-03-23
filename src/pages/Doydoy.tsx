@@ -17,6 +17,7 @@ const Doydoy: FC<Props> = () => {
           display: 'grid',
           gridTemplateColumns: '320px 320px 1fr',
           gap: 6,
+          height: '100%',
         }}
       >
         <Column sx={{ gap: 6 }}>

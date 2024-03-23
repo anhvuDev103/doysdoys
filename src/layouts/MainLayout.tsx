@@ -6,7 +6,15 @@ interface Props {
 }
 
 const MainLayout: FC<Props> = ({ children }) => {
-  return <Box>{children}</Box>;
+  return (
+    <Box
+      sx={{
+        height: '100%',
+      }}
+    >
+      {children}
+    </Box>
+  );
 };
 
 export default MainLayout;

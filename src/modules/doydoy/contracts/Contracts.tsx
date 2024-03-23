@@ -26,7 +26,7 @@ const ContractsListHead = () => {
 
 const Contracts = () => {
   return (
-    <Panel label='Contracts' headless sx={{ p: 0 }}>
+    <Panel label='Contracts' headless sx={{ p: 0, flex: 1 }}>
       <ContractsListHead />
       <ContractsList />
     </Panel>
