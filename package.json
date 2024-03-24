@@ -14,12 +14,22 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.7.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@ethersproject/providers": "^5.7.2",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.13",
+    "@walletconnect/ethereum-provider": "^2.11.3",
+    "@web3-react/coinbase-wallet": "^8.2.3",
+    "@web3-react/core": "^8.2.3",
+    "@web3-react/metamask": "^8.2.4",
+    "@web3-react/walletconnect": "^8.2.3",
+    "@web3-react/walletlink-connector": "^6.2.14",
+    "ethers": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "swr": "^2.2.5",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -31,6 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "@web3-react/types": "^8.2.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",

@@ -2,6 +2,12 @@ import { PowerIcon } from '@components/icons';
 import { Panel } from '@components/Panel';
 import { Column, Row } from '@components/primitives';
 import { Avatar, Button, styled, Typography } from '@mui/material';
+import {
+  ConnectionType,
+  getConnection,
+  tryActivateConnector,
+  tryDeactivateConnector,
+} from '@utils/wallet/connections';
 
 const Network = styled(Avatar)(({ theme }) => ({
   width: 64,
@@ -28,6 +34,25 @@ const Network = styled(Avatar)(({ theme }) => ({
 }));
 
 const Connection = () => {
+  const activation = async () => {
+    try {
+      await tryActivateConnector(
+        getConnection(ConnectionType.INJECTED).connector,
+      );
+    } catch (error) {
+      //FIX ME
+    }
+  };
+
+  const deactivation = async () => {
+    try {
+      await tryDeactivateConnector(
+        getConnection(ConnectionType.INJECTED).connector,
+      );
+    } catch (error) {
+      //FIX ME
+    }
+  };
   return (
     <Panel label='Network'>
       <Row>
@@ -47,10 +72,11 @@ const Connection = () => {
             <Typography variant='title1'>0x7FF6...E074</Typography>
           </Column>
         </Row>
-        <Button variant='red' size='squared'>
+        <Button variant='red' size='squared' onClick={deactivation}>
           <PowerIcon fontSize='small' />
         </Button>
       </Row>
+      <Button onClick={activation}>Connect</Button>
     </Panel>
   );
 };

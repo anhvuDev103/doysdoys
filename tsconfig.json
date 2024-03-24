@@ -27,5 +27,6 @@
     }
   },
   "include": ["src"],
+  "files": ["./react-app-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
