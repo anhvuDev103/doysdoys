@@ -4,25 +4,26 @@ import { FC } from 'react';
 
 interface Props extends InputProps {
   label: string;
+  errorText?: string | null;
 }
 
-const BasicInput: FC<Props> = ({ label, ...props }) => {
+const BasicInput: FC<Props> = ({ label, errorText, ...props }) => {
   return (
     <Column>
-      <Typography mb={1}>{label}</Typography>
-      <Row
-        sx={{
-          alignItems: 'stretch',
-          gap: 2,
-        }}
-      >
-        <Input
-          sx={{
-            flex: 1,
-          }}
-          {...props}
-        />
+      <Row>
+        <Typography mb={1}>{label}</Typography>
+        {errorText && (
+          <Typography variant='body' color='common.red'>
+            {errorText}
+          </Typography>
+        )}
       </Row>
+      <Input
+        sx={{
+          flex: 1,
+        }}
+        {...props}
+      />
     </Column>
   );
 };

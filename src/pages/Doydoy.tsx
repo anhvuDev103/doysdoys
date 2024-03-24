@@ -5,11 +5,20 @@ import Contracts from '@modules/doydoy/contracts/Contracts';
 import Functions from '@modules/doydoy/functions/Functions';
 import InputOutput from '@modules/doydoy/inputOutput/InputOutput';
 import { Box } from '@mui/material';
-import { FC } from 'react';
+import useRootStore from '@stores/rootStore';
+import { useWeb3React } from '@web3-react/core';
+import { FC, useEffect } from 'react';
 
 interface Props {}
 
 const Doydoy: FC<Props> = () => {
+  const { account: walletAccount } = useWeb3React();
+  const setAccount = useRootStore((store) => store.setAccount);
+
+  useEffect(() => {
+    setAccount(walletAccount?.toLowerCase());
+  }, [walletAccount, setAccount]);
+
   return (
     <MainLayout>
       <Box

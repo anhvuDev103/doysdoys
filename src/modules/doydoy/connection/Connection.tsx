@@ -1,11 +1,12 @@
 import { PowerIcon } from '@components/icons';
 import { Panel } from '@components/Panel';
-import { Column, Row } from '@components/primitives';
+import { Column, ConnectButton, Row } from '@components/primitives';
 import { Avatar, Button, styled, Typography } from '@mui/material';
+import useRootStore from '@stores/rootStore';
+import { shortenAddress } from '@utils/common';
 import {
   ConnectionType,
   getConnection,
-  tryActivateConnector,
   tryDeactivateConnector,
 } from '@utils/wallet/connections';
 
@@ -21,7 +22,7 @@ const Network = styled(Avatar)(({ theme }) => ({
     content: '""',
     width: 20,
     height: 20,
-    backgroundColor: theme.palette.common.green,
+    backgroundColor: theme.palette.common.gray,
     borderRadius: 50,
     border: '1px solid',
     borderColor: theme.palette.common.black,
@@ -31,28 +32,28 @@ const Network = styled(Avatar)(({ theme }) => ({
     right: 0,
     bottom: 0,
   },
+
+  '&.actived': {
+    '&::after': {
+      backgroundColor: theme.palette.common.green,
+    },
+  },
 }));
 
 const Connection = () => {
-  const activation = async () => {
-    try {
-      await tryActivateConnector(
-        getConnection(ConnectionType.INJECTED).connector,
-      );
-    } catch (error) {
-      //FIX ME
-    }
-  };
+  const account = useRootStore((store) => store.account);
 
-  const deactivation = async () => {
+  const deactivate = async () => {
     try {
       await tryDeactivateConnector(
         getConnection(ConnectionType.INJECTED).connector,
       );
     } catch (error) {
+      console.error('>> Check | deactivate | error:', error);
       //FIX ME
     }
   };
+
   return (
     <Panel label='Network'>
       <Row>
@@ -62,6 +63,7 @@ const Connection = () => {
           }}
         >
           <Network
+            className={account && 'actived'}
             alt='network'
             src='https://s3.coinmarketcap.com/static/img/portraits/62d51d9af192d82df8ff3a83.png'
           />
@@ -69,14 +71,25 @@ const Connection = () => {
             <Typography variant='title2' color='text.secondary'>
               Account
             </Typography>
-            <Typography variant='title1'>0x7FF6...E074</Typography>
+            <Typography variant='title1'>
+              {shortenAddress(account, 'No account')}
+            </Typography>
           </Column>
         </Row>
-        <Button variant='red' size='squared' onClick={deactivation}>
-          <PowerIcon fontSize='small' />
-        </Button>
+        {account && (
+          <Button variant='red' size='squared' onClick={deactivate}>
+            <PowerIcon fontSize='small' />
+          </Button>
+        )}
       </Row>
-      <Button onClick={activation}>Connect</Button>
+      {!account && (
+        <ConnectButton
+          fullWidth
+          sx={{
+            mt: 6,
+          }}
+        />
+      )}
     </Panel>
   );
 };

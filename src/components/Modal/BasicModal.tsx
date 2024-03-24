@@ -10,7 +10,7 @@ interface Props extends PaperProps {
 }
 
 const Modal = styled(Paper)(({ theme }) => ({
-  boxShadow: theme.shadows[1],
+  boxShadow: theme.shadows[2],
   width: '100%',
   maxWidth: 424,
   maxHeight: '80vh',
@@ -28,6 +28,7 @@ const Head = styled(Row)(({ theme }) => ({
   borderBottom: '1px solid',
   borderBottomColor: theme.palette.common.black,
   padding: '16px 24px',
+  ...theme.typography.title1Bold,
 }));
 
 const BasicModal = ({ label, children, dismiss, ...props }: Props) => {

@@ -26,7 +26,18 @@ const ContractsListHead = () => {
 
 const Contracts = () => {
   return (
-    <Panel label='Contracts' headless sx={{ p: 0, flex: 1 }}>
+    <Panel
+      label='Contracts'
+      headless
+      sx={{ p: 0, flex: 1 }}
+      contentProps={{
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        },
+      }}
+    >
       <ContractsListHead />
       <ContractsList />
     </Panel>

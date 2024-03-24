@@ -1,11 +1,11 @@
 import { Box, BoxProps } from '@mui/material';
 import { FC, ReactNode } from 'react';
 
-interface Props extends BoxProps {
-  children: ReactNode;
+export interface ItemProps extends BoxProps {
+  children?: ReactNode;
 }
 
-const Item: FC<Props> = ({ children, ...props }) => {
+export const Item: FC<ItemProps> = ({ children, ...props }) => {
   return (
     <Box
       {...props}
@@ -15,9 +15,10 @@ const Item: FC<Props> = ({ children, ...props }) => {
         borderBottom: '1px dashed',
         borderBottomColor: 'common.black',
         cursor: 'pointer',
-        '&:last-child': {
-          borderBottomColor: 'transparent',
-        },
+        transition: '400ms',
+        // '&:last-child': {
+        //   borderBottomColor: 'transparent',
+        // },
         '&:hover': {
           backgroundColor: 'action.hover',
         },
@@ -28,5 +29,3 @@ const Item: FC<Props> = ({ children, ...props }) => {
     </Box>
   );
 };
-
-export default Item;

@@ -1,13 +1,13 @@
 import { StateCreator } from 'zustand';
 
 export interface WalletSlice {
-  account: null;
-  activate: () => void;
-  deactivate: () => void;
+  account: string | undefined;
+  setAccount: (account: string | undefined) => void;
 }
 
-export const createWalletSlice: StateCreator<WalletSlice> = (_set) => ({
-  account: null,
-  activate: () => {},
-  deactivate: () => {},
+export const createWalletSlice: StateCreator<WalletSlice> = (set) => ({
+  account: undefined,
+  setAccount: (account: string | undefined) => {
+    set({ account });
+  },
 });

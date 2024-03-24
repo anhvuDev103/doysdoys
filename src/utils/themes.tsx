@@ -226,7 +226,12 @@ export const getDesignTokens = (mode: Mode) => {
     shape: {
       borderRadius: 2,
     },
-    shadows: ['none', '#000000 1px 1px 0 0', ...Array(23).fill('none')],
+    shadows: [
+      'none',
+      '#000000 1px 1px 0 0',
+      '#000000 3px 3px 0 0',
+      ...Array(22).fill('none'),
+    ],
   } as ThemeOptions;
 };
 
@@ -257,12 +262,17 @@ export function getThemedComponents(theme: Theme) {
             minWidth: 'unset',
             textTransform: 'none',
             transition: '200ms',
-
             ...theme.typography.body,
 
-            '&:hover': {
+            '&:not(.Mui-disabled):hover': {
               borderColor: theme.palette.common.black,
               opacity: 0.7,
+            },
+
+            '&.Mui-disabled': {
+              backgroundColor: theme.palette.common.gray,
+              pointerEvents: 'all',
+              cursor: 'no-drop',
             },
           },
           sizeSmall: {
@@ -296,7 +306,7 @@ export function getThemedComponents(theme: Theme) {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.common.red,
 
-              '&:hover': {
+              '&:not(.Mui-disabled):hover': {
                 backgroundColor: theme.palette.common.red,
               },
             },
@@ -309,7 +319,7 @@ export function getThemedComponents(theme: Theme) {
               color: theme.palette.common.black,
               backgroundColor: theme.palette.common.yellow,
 
-              '&:hover': {
+              '&:not(.Mui-disabled):hover': {
                 backgroundColor: theme.palette.common.yellow,
               },
             },
@@ -322,7 +332,7 @@ export function getThemedComponents(theme: Theme) {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.common.green,
 
-              '&:hover': {
+              '&:not(.Mui-disabled):hover': {
                 backgroundColor: theme.palette.common.green,
               },
             },
@@ -446,13 +456,17 @@ export function getThemedComponents(theme: Theme) {
           {
             props: { size: 'small' },
             style: {
-              height: 32,
+              '& .MuiInput-input': {
+                height: 32,
+              },
             },
           },
           {
             props: { size: 'medium' },
             style: {
-              height: 40,
+              '& .MuiInput-input': {
+                height: 40,
+              },
             },
           },
           {
