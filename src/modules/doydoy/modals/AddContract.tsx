@@ -1,6 +1,6 @@
 import { BasicInput, BasicSelect } from '@components/Input';
 import BasicModal from '@components/Modal/BasicModal';
-import { Column } from '@components/primitives';
+import { Column, Row } from '@components/primitives';
 import Contract, { ContractType } from '@models/Contract';
 import { Button, MenuItem, PaperProps, SelectChangeEvent } from '@mui/material';
 import useRootStore from '@stores/rootStore';
@@ -150,20 +150,42 @@ const AddContract: FC<Props> = ({ ...props }) => {
             rows={5}
             {...getInputProps('abi')}
           />
-          <BasicInput name='name' label='Name' {...getInputProps('name')} />
-          <BasicSelect
-            name='network'
-            label='Network'
-            onChange={handleChangeNetwork}
-            errorText={addContractError['networkId']}
-            value={addContractForm['networkId']}
+          <Row
+            sx={{
+              gap: 6,
+            }}
           >
-            {Object.values(CHAINS).map((chain) => (
-              <MenuItem key={chain.id} value={chain.id}>
-                {chain.name}
-              </MenuItem>
-            ))}
-          </BasicSelect>
+            <BasicInput
+              name='name'
+              label='Name'
+              containerProps={{
+                sx: {
+                  flex: 1,
+                },
+              }}
+              {...getInputProps('name')}
+            />
+            <BasicSelect
+              name='network'
+              label='Network'
+              onChange={handleChangeNetwork}
+              errorText={addContractError['networkId']}
+              value={addContractForm['networkId']}
+              align='right'
+              defaultValue={1}
+              containerProps={{
+                sx: {
+                  flex: 1,
+                },
+              }}
+            >
+              {Object.values(CHAINS).map((chain) => (
+                <MenuItem key={chain.id} value={chain.id}>
+                  {chain.name}
+                </MenuItem>
+              ))}
+            </BasicSelect>
+          </Row>
         </Column>
       </BasicModal.Body>
       <BasicModal.Action>

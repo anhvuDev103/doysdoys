@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
+import { defineConfig } from 'vite';
 
 function getAlias() {
   const rootProject = process.cwd();
@@ -28,6 +28,6 @@ const foldersName = getAlias();
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: foldersName
-  }
+    alias: foldersName,
+  },
 });

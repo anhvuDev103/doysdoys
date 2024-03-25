@@ -13,6 +13,7 @@ const Web3Provider: FC<Props> = ({ children }) => {
         connector.connector,
         connector.hooks,
       ])}
+      key={Math.random()}
     >
       {children}
     </Web3ReactProvider>

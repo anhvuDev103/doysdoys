@@ -1,15 +1,39 @@
 import { Column, Row } from '@components/primitives';
-import { Select, SelectProps, Typography } from '@mui/material';
+import { BoxProps, Select, SelectProps, Typography } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
   label: string;
   errorText?: string | null;
+  containerProps?: BoxProps;
+  align?: 'left' | 'right';
 } & SelectProps;
 
-const BasicInput: FC<Props> = ({ label, errorText, children, ...props }) => {
+const BasicInput: FC<Props> = ({
+  label,
+  errorText,
+  children,
+  containerProps,
+  align,
+  ...props
+}) => {
+  const getAlignProps = (): SelectProps => {
+    return {
+      MenuProps: {
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: align || 'left',
+        },
+        transformOrigin: {
+          vertical: 'top',
+          horizontal: align || 'left',
+        },
+      },
+    };
+  };
+
   return (
-    <Column>
+    <Column {...containerProps}>
       <Row>
         <Typography mb={1}>{label}</Typography>
         {errorText && (
@@ -18,7 +42,9 @@ const BasicInput: FC<Props> = ({ label, errorText, children, ...props }) => {
           </Typography>
         )}
       </Row>
-      <Select {...props}>{children}</Select>
+      <Select {...getAlignProps()} {...props}>
+        {children}
+      </Select>
     </Column>
   );
 };

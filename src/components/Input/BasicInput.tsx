@@ -1,15 +1,21 @@
 import { Column, Row } from '@components/primitives';
-import { Input, InputProps, Typography } from '@mui/material';
+import { BoxProps, Input, InputProps, Typography } from '@mui/material';
 import { FC } from 'react';
 
 interface Props extends InputProps {
   label: string;
   errorText?: string | null;
+  containerProps?: BoxProps;
 }
 
-const BasicInput: FC<Props> = ({ label, errorText, ...props }) => {
+const BasicInput: FC<Props> = ({
+  label,
+  errorText,
+  containerProps,
+  ...props
+}) => {
   return (
-    <Column>
+    <Column {...containerProps}>
       <Row>
         <Typography mb={1}>{label}</Typography>
         {errorText && (
