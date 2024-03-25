@@ -1,7 +1,7 @@
 import { Web3ReactHooks } from '@web3-react/core';
 import { AddEthereumChainParameter, Connector } from '@web3-react/types';
 
-import { CHAIN_INFO } from './chains';
+import { CHAINS } from './chains';
 import { buildCoinbaseWalletConnector } from './connectors/coinbase';
 import { buildInjectedConnector } from './connectors/injected';
 import { buildWalletConnectConnector } from './connectors/walletConnect';
@@ -75,13 +75,13 @@ export const switchNetwork = async (
     return;
   }
 
-  const chainInfo = CHAIN_INFO[chainId];
+  const chainInfo = CHAINS[chainId];
   const addChainParameter: AddEthereumChainParameter = {
     chainId,
-    chainName: chainInfo.label,
-    rpcUrls: [chainInfo.rpcUrl],
+    chainName: chainInfo.name,
+    rpcUrls: chainInfo.rpcUrlsArray,
     nativeCurrency: chainInfo.nativeCurrency,
-    blockExplorerUrls: [chainInfo.explorer],
+    blockExplorerUrls: chainInfo.blockExplorersArray,
   };
   await connector.activate(addChainParameter);
 };

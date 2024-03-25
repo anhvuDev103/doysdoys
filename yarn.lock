@@ -1794,6 +1794,11 @@
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.14.0"
 
+"@wagmi/chains@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-1.8.0.tgz#70e5fd0d50c8f9b8e63585eaf8544481e71707d3"
+  integrity sha512-UXo0GF0Cl0+neKC2KAmVAahv8L/5rACbFRRqkDvHMefzY6Fh7yzJd8F4GaGNNG3w4hj8eUB/E3+dEpaTYDN62w==
+
 "@walletconnect/browser-utils@^1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.8.0.tgz#33c10e777aa6be86c713095b5206d63d32df0951"

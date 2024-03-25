@@ -1,68 +1,42 @@
-// Sets if the example should run locally or on chain
-export enum Chain {
-  POLYGON,
-  MAINNET,
-}
+import * as chains from '@wagmi/chains';
 
-// Inputs that configure this example to run
-interface ExampleConfig {
-  chain: Chain;
-  rpc: {
-    polygon: string;
-    mainnet: string;
+export const MAINNET_CHAIN_ID = 1;
+
+export const CHAINS = {} as {
+  [id: number]: chains.Chain & {
+    rpcUrlsArray: string[];
+    blockExplorersArray: string[];
+
+    //overrides
+    nativeCurrency: {
+      name: string;
+      symbol: string;
+      decimals: 18;
+    };
   };
-}
-
-// Example Configuration
-export const CurrentConfig: ExampleConfig = {
-  chain: Chain.MAINNET,
-  rpc: {
-    polygon: '',
-    mainnet: '',
-  },
 };
 
-// Chains
-const MAINNET_CHAIN_ID = 1;
-const POLYGON_CHAIN_ID = 137;
+Object.values(chains).forEach((chain: chains.Chain) => {
+  const rpcUrlsArray = [
+    ...new Set([
+      ...Object.values(chain.rpcUrls.public.http),
+      ...Object.values(chain.rpcUrls.default.http),
+    ]),
+  ];
 
-export const INPUT_CHAIN_ID =
-  CurrentConfig.chain === Chain.POLYGON ? POLYGON_CHAIN_ID : MAINNET_CHAIN_ID;
-export const INPUT_CHAIN_URL =
-  CurrentConfig.chain === Chain.POLYGON
-    ? CurrentConfig.rpc.polygon
-    : CurrentConfig.rpc.mainnet;
+  const blockExplorersArray = [chain.blockExplorers?.default.url || ''];
 
-export const CHAIN_TO_URL_MAP = {
-  [POLYGON_CHAIN_ID]: CurrentConfig.rpc.polygon,
-  [MAINNET_CHAIN_ID]: CurrentConfig.rpc.mainnet,
-};
-
-type ChainInfo = {
-  explorer: string;
-  label: string;
-  nativeCurrency: {
-    name: string;
-    symbol: string;
-    decimals: 18;
+  CHAINS[chain.id] = {
+    ...chain,
+    rpcUrlsArray,
+    blockExplorersArray,
+    nativeCurrency: {
+      ...chain.nativeCurrency,
+      decimals: 18,
+    },
   };
-  rpcUrl: string;
-};
+});
 
-export const CHAIN_INFO: { [key: string]: ChainInfo } = {
-  [MAINNET_CHAIN_ID]: {
-    explorer: 'https://etherscan.io/',
-    label: 'Ethereum',
-    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-    rpcUrl: CurrentConfig.rpc.mainnet,
-  },
-  [POLYGON_CHAIN_ID]: {
-    explorer: 'https://polygonscan.com/',
-    label: 'Polygon',
-    nativeCurrency: { name: 'Polygon Matic', symbol: 'MATIC', decimals: 18 },
-    rpcUrl: CurrentConfig.rpc.polygon,
-  },
+export const getRpcUrl = (chainId: number) => {
+  return CHAINS[chainId].rpcUrlsArray?.[0] || '';
 };
-
-// URLs
-export const METAMASK_URL = 'https://metamask.io/';

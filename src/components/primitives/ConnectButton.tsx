@@ -4,12 +4,14 @@ import {
   getConnection,
   tryActivateConnector,
 } from '@utils/wallet/connections';
+import { useWeb3React } from '@web3-react/core';
 import { FC, useState } from 'react';
 
 interface Props extends ButtonProps {}
 
 const ConnectButton: FC<Props> = ({ ...props }) => {
   const [isActivating, setIsActivating] = useState(false);
+  const { isActive } = useWeb3React();
 
   const activate = async () => {
     try {
@@ -24,17 +26,23 @@ const ConnectButton: FC<Props> = ({ ...props }) => {
     }
   };
 
+  const buttonLabel = () => {
+    if (isActive) return 'Connected';
+    if (isActive) return 'Connecting...';
+    return 'Connect Wallet';
+  };
+
   return (
     <Button
       variant='yellow'
       onClick={activate}
-      disabled={isActivating}
+      disabled={isActivating || isActive}
       {...props}
       sx={{
         ...props.sx,
       }}
     >
-      {isActivating ? 'Connecting...' : 'Connect Wallet'}
+      {buttonLabel()}
     </Button>
   );
 };
