@@ -1,13 +1,13 @@
-import { CHAIN_ID_KEY } from '@constants/localStorage';
+import { NETWORK_ID_KEY } from '@constants/localStorage';
 import { getLocalStorage } from '@utils/localStorage';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import { initializeConnector } from '@web3-react/core';
 
-import { getRpcUrl, MAINNET_CHAIN_ID } from '../chains';
+import { getRpcUrl, MAINNET_NETWORK_ID } from '../chains';
 import { Connection, ConnectionType, onConnectionError } from '../connections';
 
 export function buildCoinbaseWalletConnector() {
-  const chainId = getLocalStorage(CHAIN_ID_KEY) || MAINNET_CHAIN_ID;
+  const networkId = getLocalStorage(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
 
   const [web3CoinbaseWallet, web3CoinbaseWalletHooks] =
     initializeConnector<CoinbaseWallet>(
@@ -15,7 +15,7 @@ export function buildCoinbaseWalletConnector() {
         new CoinbaseWallet({
           actions,
           options: {
-            url: getRpcUrl(chainId),
+            url: getRpcUrl(networkId),
             appName: 'Uniswap Example',
             reloadOnDisconnect: false,
           },

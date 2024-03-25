@@ -1,2 +1,2 @@
 export const CONTRACTS_KEY = 'CONTRACTS';
-export const CHAIN_ID_KEY = 'CHAIN_ID';
+export const NETWORK_ID_KEY = 'NETWORK_ID';

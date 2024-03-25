@@ -1,6 +1,7 @@
+import { NetworkId } from '@utils/types';
 import * as chains from '@wagmi/chains';
 
-export const MAINNET_CHAIN_ID = 1;
+export const MAINNET_NETWORK_ID = 1;
 
 export const CHAINS = {} as {
   [id: number]: chains.Chain & {
@@ -37,6 +38,10 @@ Object.values(chains).forEach((chain: chains.Chain) => {
   };
 });
 
-export const getRpcUrl = (chainId: number) => {
-  return CHAINS[chainId].rpcUrlsArray?.[0] || '';
+export const getRpcUrl = (networkId: NetworkId) => {
+  return CHAINS[networkId].rpcUrlsArray?.[0] || '';
+};
+
+export const getNetworkName = (networkId: NetworkId) => {
+  return CHAINS[networkId].name;
 };

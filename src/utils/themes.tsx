@@ -220,7 +220,7 @@ export const getDesignTokens = (mode: Mode) => {
         black60: '#00000099',
       },
       action: {
-        hover: getColor('#0000001a', '#0000001a'),
+        hover: getColor('#00000033', '#00000033'),
       },
     },
     shape: {
@@ -476,6 +476,54 @@ export function getThemedComponents(theme: Theme) {
             },
           },
         ],
+      },
+      MuiSelect: {
+        styleOverrides: {
+          root: {
+            height: 40,
+            border: '1px solid',
+            borderColor: theme.palette.common.black,
+            boxShadow: theme.shadows[1],
+
+            '&:hover': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+              },
+            },
+
+            '& .MuiSelect-outlined': {
+              paddingLeft: '24px',
+              paddingRight: '12px',
+            },
+
+            '&.Mui-focused': {
+              '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+              },
+            },
+          },
+        },
+      },
+      MuiPopover: {
+        styleOverrides: {
+          paper: {
+            maxHeight: '200px !important',
+            padding: 0,
+            boxShadow: theme.shadows[1],
+            marginTop: 5,
+            borderRadius: theme.shape.borderRadius,
+
+            '& .MuiList-padding': {
+              padding: 0,
+            },
+
+            '& .MuiMenuItem-gutters': {
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+              },
+            },
+          },
+        },
       },
       MuiCheckbox: {
         styleOverrides: {

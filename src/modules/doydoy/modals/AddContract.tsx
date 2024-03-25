@@ -1,13 +1,15 @@
-import BasicInput from '@components/Input/BasicInput';
+import { BasicInput, BasicSelect } from '@components/Input';
 import BasicModal from '@components/Modal/BasicModal';
 import { Column } from '@components/primitives';
 import Contract, { ContractType } from '@models/Contract';
-import { Button, PaperProps } from '@mui/material';
+import { Button, MenuItem, PaperProps, SelectChangeEvent } from '@mui/material';
 import useRootStore from '@stores/rootStore';
 import { generateName } from '@utils/common';
 import { BlurEvent, InputEvent } from '@utils/types';
+import { CHAINS } from '@utils/wallet/chains';
 import { isAddress } from 'ethers';
 import { FC, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 type AddContractError = {
   [key in keyof ContractType]: string | null;
@@ -22,14 +24,18 @@ const AddContract: FC<Props> = ({ ...props }) => {
     address: '',
     abi: '',
     name: generateName(),
+    networkId: 0,
   });
   const [addContractError, setAddContractError] = useState<AddContractError>({
     address: null,
     abi: null,
     name: null,
+    networkId: null,
   });
 
-  const addContract = useRootStore((store) => store.addContract);
+  const [addContract, setSelectedContract] = useRootStore(
+    useShallow((store) => [store.addContract, store.setSelectedContract]),
+  );
 
   const handleChangeInput = (event: InputEvent) => {
     const { name, value } = event.target;
@@ -40,6 +46,15 @@ const AddContract: FC<Props> = ({ ...props }) => {
     }));
   };
 
+  const handleChangeNetwork = (event: SelectChangeEvent<unknown>) => {
+    const { value } = event.target;
+
+    setAddContractForm((prev) => ({
+      ...prev,
+      networkId: Number(value),
+    }));
+  };
+
   const handleBlurInput = (event: BlurEvent) => {
     const { name, value } = event.target;
 
@@ -47,6 +62,7 @@ const AddContract: FC<Props> = ({ ...props }) => {
       address: getAddressError(value),
       abi: getAbiError(value),
       name: getBaseInputError(value),
+      networkId: null,
     };
 
     setAddContractError((prev) => ({
@@ -60,6 +76,7 @@ const AddContract: FC<Props> = ({ ...props }) => {
       address: getAddressError(addContractForm['address']),
       abi: getAbiError(addContractForm['abi'] as string),
       name: getBaseInputError(addContractForm['name']),
+      networkId: null,
     };
 
     const isValidForm = Object.values(error).filter(Boolean).length === 0;
@@ -70,7 +87,9 @@ const AddContract: FC<Props> = ({ ...props }) => {
     }
 
     //Add Contract
-    addContract(new Contract(addContractForm));
+    const contract = new Contract(addContractForm);
+    addContract(contract);
+    setSelectedContract(contract);
     props.dismiss!();
   };
 
@@ -132,6 +151,19 @@ const AddContract: FC<Props> = ({ ...props }) => {
             {...getInputProps('abi')}
           />
           <BasicInput name='name' label='Name' {...getInputProps('name')} />
+          <BasicSelect
+            name='network'
+            label='Network'
+            onChange={handleChangeNetwork}
+            errorText={addContractError['networkId']}
+            value={addContractForm['networkId']}
+          >
+            {Object.values(CHAINS).map((chain) => (
+              <MenuItem key={chain.id} value={chain.id}>
+                {chain.name}
+              </MenuItem>
+            ))}
+          </BasicSelect>
         </Column>
       </BasicModal.Body>
       <BasicModal.Action>

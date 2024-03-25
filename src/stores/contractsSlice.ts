@@ -8,6 +8,9 @@ export interface ContractsSlice {
   addContract: (contract: Contract) => void;
   removeContract: (id: string) => void;
   clearContracts: () => void;
+
+  selectedContract: Contract | null;
+  setSelectedContract: (contract: Contract) => void;
 }
 
 export const createContractsSlice: StateCreator<ContractsSlice> = (
@@ -28,6 +31,13 @@ export const createContractsSlice: StateCreator<ContractsSlice> = (
   clearContracts: () => {
     set({
       contracts: [],
+    });
+  },
+
+  selectedContract: null,
+  setSelectedContract: (contract: Contract) => {
+    set({
+      selectedContract: contract,
     });
   },
 });
