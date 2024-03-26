@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { ContractsSlice, createContractsSlice } from './contractsSlice';
 import { createWalletSlice, WalletSlice } from './walletSlice';
 
-type RootStore = WalletSlice & ContractsSlice;
+export type RootStore = WalletSlice & ContractsSlice;
 
 const useRootStore = create<RootStore>()((...args) => ({
   ...createWalletSlice(...args),

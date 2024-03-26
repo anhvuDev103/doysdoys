@@ -3,6 +3,8 @@ import Contract from '@models/Contract';
 import { getLocalStorage, setLocalStorage } from '@utils/localStorage';
 import { StateCreator } from 'zustand';
 
+import { RootStore } from './rootStore';
+
 export interface ContractsSlice {
   contracts: Contract[];
   addContract: (contract: Contract) => void;
@@ -13,10 +15,12 @@ export interface ContractsSlice {
   setSelectedContract: (contract: Contract) => void;
 }
 
-export const createContractsSlice: StateCreator<ContractsSlice> = (
-  set,
-  get,
-) => ({
+export const createContractsSlice: StateCreator<
+  RootStore,
+  [],
+  [],
+  ContractsSlice
+> = (set, get) => ({
   contracts: getLocalStorage(CONTRACTS_KEY) || [],
   addContract: (contract: Contract) => {
     set((state) => ({ contracts: [contract, ...state.contracts] }));
