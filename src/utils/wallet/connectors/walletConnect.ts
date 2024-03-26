@@ -17,7 +17,7 @@ export function buildWalletConnectConnector() {
           options: {
             projectId: 'a4b016caa6b2c6032ce9226b04ab4c6b',
             chains: [networkId],
-            optionalChains: [250],
+            optionalChains: [250, 10],
             showQrModal: true,
           },
           onError: onConnectionError,
