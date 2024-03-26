@@ -15,7 +15,7 @@ export function buildWalletConnectConnector() {
         new WalletConnect({
           actions,
           options: {
-            projectId: 'a4b016caa6b2c6032ce9226b04ab4c6b',
+            projectId: 'ef0a23043819a793a6b132d96d6825ec',
             chains: [networkId],
             optionalChains: [250, 10],
             showQrModal: true,

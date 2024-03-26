@@ -19,16 +19,17 @@ const ConnectButton: FC<Props> = ({ ...props }) => {
       await tryActivateConnector(
         getConnection(ConnectionType.WALLET_CONNECT).connector,
       );
-      setIsActivating(false);
     } catch (error) {
       console.error('>> Check | activate | error:', error);
       //FIX ME
+    } finally {
+      setIsActivating(false);
     }
   };
 
   const buttonLabel = () => {
     if (isActive) return 'Connected';
-    if (isActive) return 'Connecting...';
+    if (isActivating) return 'Connecting...';
     return 'Connect Wallet';
   };
 
