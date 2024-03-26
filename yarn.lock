@@ -1894,7 +1894,7 @@
     eip1193-provider "1.0.1"
     eventemitter3 "4.0.7"
 
-"@walletconnect/ethereum-provider@^2.11.3":
+"@walletconnect/ethereum-provider@^2.10.1", "@walletconnect/ethereum-provider@^2.11.3":
   version "2.11.3"
   resolved "https://registry.yarnpkg.com/@walletconnect/ethereum-provider/-/ethereum-provider-2.11.3.tgz#a9fd8b6a3ed65ab0331a1329bece9c0f47292262"
   integrity sha512-lg+ZzjLfk1GZgLVwMBmCteSNQ6hVn0Fgo1xDnzU/Ak3IqyfWIeMcM79Z5NgPLQOwqBVGckoBnx5BU5wai+AjGg==
@@ -2259,6 +2259,16 @@
   integrity sha512-kSG90QkN+n7IOtp10nQ44oS8J7jzfH9EmqnruwBpCGybh1FM/ohyRvUKWYZNfNE4wsjTSpKsINR0/VdDsZMHyg==
   dependencies:
     zustand "4.4.0"
+
+"@web3-react/walletconnect-v2@^8.5.1":
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/@web3-react/walletconnect-v2/-/walletconnect-v2-8.5.1.tgz#bc7d43b53bb30ec524e0cc36e20e1f279bf18818"
+  integrity sha512-K6RjdllFpEftTDQw39fRfuVcBLNCWXDxx5oZiWDc7D2RW071C0m1WridOeUiELmCXykyDCrIjd2zAVwV4GGueA==
+  dependencies:
+    "@walletconnect/ethereum-provider" "^2.10.1"
+    "@walletconnect/modal" "^2.6.2"
+    "@web3-react/types" "^8.2.3"
+    eventemitter3 "^4.0.7"
 
 "@web3-react/walletconnect@^8.2.3":
   version "8.2.3"
