@@ -12,6 +12,14 @@ export const shortenAddress = (address: Address, placeholder?: string) => {
   );
 };
 
+export const shortenString = (raw: string, maxlength: number = 16) => {
+  if (raw.length < maxlength) {
+    return raw;
+  }
+
+  return raw.substring(0, 6) + '...' + raw.substring(raw.length - 4);
+};
+
 export const generateName = () => {
   const words = generate({ exactly: 2 }) as string[];
 

@@ -6,18 +6,31 @@ import Functions from '@modules/doydoy/functions/Functions';
 import InputOutput from '@modules/doydoy/inputOutput/InputOutput';
 import { Box } from '@mui/material';
 import useRootStore from '@stores/rootStore';
+import { Network } from '@utils/types';
+import { getNetworkName } from '@utils/wallet/chains';
 import { useWeb3React } from '@web3-react/core';
 import { FC, useEffect } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 interface Props {}
 
 const Doydoy: FC<Props> = () => {
-  const { account: walletAccount } = useWeb3React();
-  const setAccount = useRootStore((store) => store.setAccount);
+  const { account: walletAccount, chainId } = useWeb3React();
+  const [setAccount, setNetwork] = useRootStore(
+    useShallow((store) => [store.setAccount, store.setNetwork]),
+  );
 
   useEffect(() => {
     setAccount(walletAccount?.toLowerCase());
-  }, [walletAccount, setAccount]);
+    if (chainId) {
+      const network: Network = {
+        id: chainId,
+        name: getNetworkName(chainId),
+      };
+
+      setNetwork(network);
+    }
+  }, [chainId, setAccount, setNetwork, walletAccount]);
 
   return (
     <MainLayout>

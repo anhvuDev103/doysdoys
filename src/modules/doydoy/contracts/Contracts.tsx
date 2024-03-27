@@ -6,10 +6,10 @@ import { Button, styled, Typography } from '@mui/material';
 
 import ContractsList from './ContractsList';
 
-const StyledContractsListHead = styled(Row)(() => ({
+const StyledContractsListHead = styled(Row)(({ theme }) => ({
   padding: '12px 20px',
   borderBottom: '1px solid',
-  borderBottomColor: 'common.black',
+  borderBottomColor: theme.palette.common.black,
 }));
 
 const ContractsListHead = () => {

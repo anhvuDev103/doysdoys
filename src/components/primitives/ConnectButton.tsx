@@ -17,7 +17,7 @@ const ConnectButton: FC<Props> = ({ ...props }) => {
     try {
       setIsActivating(true);
       await tryActivateConnector(
-        getConnection(ConnectionType.WALLET_CONNECT).connector,
+        getConnection(ConnectionType.INJECTED).connector,
       );
     } catch (error) {
       console.error('>> Check | activate | error:', error);

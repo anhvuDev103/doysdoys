@@ -46,7 +46,7 @@ const Connection = () => {
   const deactivate = async () => {
     try {
       await tryDeactivateConnector(
-        getConnection(ConnectionType.WALLET_CONNECT).connector,
+        getConnection(ConnectionType.INJECTED).connector,
       );
     } catch (error) {
       console.error('>> Check | deactivate | error:', error);

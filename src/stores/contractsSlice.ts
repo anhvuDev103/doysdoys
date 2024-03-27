@@ -21,7 +21,7 @@ export const createContractsSlice: StateCreator<
   [],
   ContractsSlice
 > = (set, get) => {
-  const contractsStorage = getLocalStorage<ContractType[]>(CONTRACTS_KEY);
+  const contractsStorage = getLocalStorage<ContractType[]>(CONTRACTS_KEY, []);
 
   const contractInstances = contractsStorage.map(
     (contract) => new Contract(contract),

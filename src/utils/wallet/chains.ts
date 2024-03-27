@@ -43,5 +43,9 @@ export const getRpcUrl = (networkId: NetworkId) => {
 };
 
 export const getNetworkName = (networkId: NetworkId) => {
-  return CHAINS[networkId].name;
+  return CHAINS[networkId]?.name;
+};
+
+export const getNetwork = (networkId: NetworkId) => {
+  return CHAINS[networkId] || undefined;
 };

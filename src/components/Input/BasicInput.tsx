@@ -3,7 +3,7 @@ import { BoxProps, Input, InputProps, Typography } from '@mui/material';
 import { FC } from 'react';
 
 interface Props extends InputProps {
-  label: string;
+  label?: string;
   errorText?: string | null;
   containerProps?: BoxProps;
 }
@@ -17,7 +17,7 @@ const BasicInput: FC<Props> = ({
   return (
     <Column {...containerProps}>
       <Row>
-        <Typography mb={1}>{label}</Typography>
+        {label && <Typography mb={1}>{label}</Typography>}
         {errorText && (
           <Typography variant='body' color='common.red'>
             {errorText}
