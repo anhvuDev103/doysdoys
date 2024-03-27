@@ -7,7 +7,8 @@ import { getRpcUrl, MAINNET_NETWORK_ID } from '../chains';
 import { Connection, ConnectionType, onConnectionError } from '../connections';
 
 export function buildCoinbaseWalletConnector() {
-  const networkId = getLocalStorage(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
+  const networkId =
+    getLocalStorage<number>(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
 
   const [web3CoinbaseWallet, web3CoinbaseWalletHooks] =
     initializeConnector<CoinbaseWallet>(

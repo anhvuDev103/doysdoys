@@ -1,4 +1,4 @@
-export const getLocalStorage = (key: string) => {
+export const getLocalStorage = <T>(key: string): T => {
   const itemStorage = window.localStorage.getItem(key);
 
   return itemStorage ? JSON.parse(itemStorage) : null;

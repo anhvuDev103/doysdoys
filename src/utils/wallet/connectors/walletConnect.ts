@@ -7,7 +7,8 @@ import { MAINNET_NETWORK_ID } from '../chains';
 import { Connection, ConnectionType, onConnectionError } from '../connections';
 
 export function buildWalletConnectConnector() {
-  const networkId = getLocalStorage(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
+  const networkId =
+    getLocalStorage<number>(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
 
   const [web3WalletConnect, web3WalletConnectHooks] =
     initializeConnector<WalletConnect>(
