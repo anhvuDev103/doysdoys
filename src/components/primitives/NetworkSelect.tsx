@@ -1,28 +1,39 @@
-import { BasicInput, BasicSelect } from '@components/Input';
+import { BasicInput } from '@components/Input';
 import { BasicSelectProps } from '@components/Input/BasicSelect';
 import useDebounce from '@hooks/useDebounce';
-import { ListSubheader, MenuItem, styled, Typography } from '@mui/material';
+import { Select, styled, Typography } from '@mui/material';
 import { shortenString } from '@utils/common';
+import { NetworkInfo } from '@utils/types';
 import { CHAINS } from '@utils/wallet/chains';
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import React, { FC, useMemo, useRef, useState } from 'react';
 
+import { Column } from '.';
 import Row from './Row';
 
-const StyledListSubheader = styled(ListSubheader)(({ theme }) => ({
-  paddingTop: '12px',
-  paddingBottom: '12px',
+type Props = {
+  handleSelect: (network: NetworkInfo) => void;
+} & BasicSelectProps;
+
+const NetworkItem = styled(Row)(({ theme }) => ({
+  padding: '12px',
   borderBottom: '1px solid',
   borderBottomColor: theme.palette.common.black,
+  cursor: 'pointer',
+
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
 }));
 
-const NetworkSelect: FC<BasicSelectProps> = (props) => {
+const NetworkSelect: FC<Props> = ({ handleSelect, ...props }) => {
   const searchInputRef = useRef<HTMLInputElement>();
+  const [selectKey, setSelectKey] = useState(0);
+
   const [search, setSearch] = useState('');
-  console.log('>> Check | search:', search);
 
   const debouncedSearch = useDebounce<string>(search);
 
-  const networks = useMemo(() => {
+  const networks = useMemo<NetworkInfo[]>(() => {
     return Object.values(CHAINS).filter(
       (chain) =>
         chain.name.toLowerCase().includes(debouncedSearch) ||
@@ -38,58 +49,103 @@ const NetworkSelect: FC<BasicSelectProps> = (props) => {
     });
   };
 
-  const handleSearchChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
-      setSearch(value);
-    },
-    [],
-  );
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearch(value);
+  };
 
   return (
-    <BasicSelect
-      name='network'
-      label='Network'
-      align='right'
-      onOpen={onOpenSelect}
-      MenuProps={{
-        MenuListProps: {
-          subheader: (
-            <StyledListSubheader>
-              <BasicInput
-                size='small'
-                autoFocus
-                placeholder='Search'
-                fullWidth
-                inputRef={searchInputRef}
-                value={search}
-                onChange={handleSearchChange}
-                onKeyDown={(e) => {
-                  if (e.key !== 'Escape') {
-                    e.stopPropagation();
-                  }
+    <Column>
+      <Row>
+        <Typography mb={1}>Network</Typography>
+        {/* {errorText && (
+          <Typography variant='body' color='common.red'>
+            {errorText}
+          </Typography>
+        )} */}
+      </Row>
+      <Select
+        key={selectKey}
+        name='network'
+        onOpen={onOpenSelect}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'right',
+          },
+          MenuListProps: {
+            subheader: (
+              <Column
+                sx={{
+                  overflowY: 'hidden',
                 }}
-              />
-            </StyledListSubheader>
-          ),
-        },
-      }}
-      containerProps={{
-        sx: {
-          flex: 1,
-        },
-      }}
-      {...props}
-    >
-      {networks.map((chain) => (
-        <MenuItem key={chain.id} value={chain.id}>
-          <Row sx={{ flex: 1 }}>
-            <Typography>{shortenString(chain.name)}</Typography>{' '}
-            <Typography>{chain.id}</Typography>
-          </Row>
-        </MenuItem>
-      ))}
-    </BasicSelect>
+              >
+                <BasicInput
+                  size='small'
+                  autoFocus
+                  placeholder='Search'
+                  fullWidth
+                  inputRef={searchInputRef}
+                  value={search}
+                  onChange={handleSearchChange}
+                  onKeyDown={(e) => {
+                    if (e.key !== 'Escape') {
+                      e.stopPropagation();
+                    }
+                  }}
+                  containerProps={{
+                    sx: {
+                      p: 3,
+                      borderBottom: '1px solid',
+                      borderBottomColor: 'common.black',
+                    },
+                  }}
+                />
+                <Column
+                  sx={{
+                    overflowY: 'auto',
+                  }}
+                >
+                  {networks.map((network) => (
+                    <NetworkItem
+                      key={network.id}
+                      onClick={() => {
+                        handleSelect(network);
+                        setSelectKey((prevKey) => prevKey + 1);
+                      }}
+                    >
+                      <Typography>{shortenString(network.name)}</Typography>{' '}
+                      <Typography>{network.id}</Typography>
+                    </NetworkItem>
+                  ))}
+                </Column>
+              </Column>
+            ),
+            sx: {
+              display: 'flex',
+            },
+          },
+          PaperProps: {
+            sx: {
+              '&.MuiMenu-paper': {
+                overflowY: 'hidden',
+                display: 'flex',
+              },
+            },
+          },
+        }}
+        containerProps={{
+          sx: {
+            flex: 1,
+          },
+        }}
+        {...props}
+      />
+    </Column>
   );
 };
 

@@ -3,10 +3,11 @@ import BasicModal from '@components/Modal/BasicModal';
 import { Column, Row } from '@components/primitives';
 import NetworkSelect from '@components/primitives/NetworkSelect';
 import Contract, { ContractType } from '@models/Contract';
-import { Button, PaperProps, SelectChangeEvent } from '@mui/material';
+import { Button, PaperProps } from '@mui/material';
 import useRootStore from '@stores/rootStore';
 import { generateName } from '@utils/common';
-import { BlurEvent, InputEvent } from '@utils/types';
+import { BlurEvent, InputEvent, NetworkId, NetworkInfo } from '@utils/types';
+import { getNetworkName } from '@utils/wallet/chains';
 import { isAddress } from 'ethers';
 import { FC, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
@@ -74,12 +75,11 @@ const AddContract: FC<Props> = ({ ...props }) => {
     }));
   };
 
-  const handleChangeNetwork = (event: SelectChangeEvent<unknown>) => {
-    const { value } = event.target;
-
+  const handleSelect = (network: NetworkInfo) => {
+    console.log('>> Check | handleSelect | network:', network);
     setAddContractForm((prev) => ({
       ...prev,
-      networkId: Number(value),
+      networkId: network.id,
     }));
   };
 
@@ -178,9 +178,12 @@ const AddContract: FC<Props> = ({ ...props }) => {
               {...getInputProps('name')}
             />
             <NetworkSelect
-              onChange={handleChangeNetwork}
+              handleSelect={handleSelect}
               errorText={addContractError['networkId']}
               value={addContractForm['networkId']}
+              renderValue={(networkId) => {
+                return getNetworkName(networkId as NetworkId) || null;
+              }}
             />
           </Row>
         </Column>

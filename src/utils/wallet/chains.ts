@@ -1,21 +1,9 @@
-import { NetworkId } from '@utils/types';
+import { NetworkId, NetworkInfoMap } from '@utils/types';
 import * as chains from '@wagmi/chains';
 
 export const MAINNET_NETWORK_ID = 1;
 
-export const CHAINS = {} as {
-  [id: number]: chains.Chain & {
-    rpcUrlsArray: string[];
-    blockExplorersArray: string[];
-
-    //overrides
-    nativeCurrency: {
-      name: string;
-      symbol: string;
-      decimals: 18;
-    };
-  };
-};
+export const CHAINS = {} as NetworkInfoMap;
 
 Object.values(chains).forEach((chain: chains.Chain) => {
   const rpcUrlsArray = [
