@@ -4,6 +4,8 @@ import useRootStore from '@stores/rootStore';
 import { FunctionFragment } from 'ethers';
 import { FC, useState } from 'react';
 
+import NoFunctionItem from './NoFunctionItem';
+
 interface Props {}
 
 const FunctionItem = styled(Item)(({ theme }) => ({
@@ -32,6 +34,10 @@ const FunctionsList: FC<Props> = () => {
       setSelectedNames((prev) => prev.filter((p) => p !== name));
     }
   };
+
+  if (functions.length === 0) {
+    return <NoFunctionItem />;
+  }
 
   return (
     <List

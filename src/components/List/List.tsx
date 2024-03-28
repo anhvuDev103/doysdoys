@@ -12,6 +12,7 @@ export const List: FC<ListProps> = ({ children, ...props }) => {
       sx={{
         border: '1px solid',
         borderColor: 'common.black',
+        overflowY: 'auto',
         ...props.sx,
       }}
     >

@@ -15,7 +15,6 @@ export const Item: FC<ItemProps> = ({ children, ...props }) => {
         borderBottom: '1px dashed',
         borderBottomColor: 'common.black',
         cursor: 'pointer',
-        transition: '400ms',
         // '&:last-child': {
         //   borderBottomColor: 'transparent',
         // },
