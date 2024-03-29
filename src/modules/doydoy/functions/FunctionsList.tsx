@@ -1,8 +1,7 @@
 import { Item, List } from '@components/List';
 import { Checkbox, styled, Typography } from '@mui/material';
 import useRootStore from '@stores/rootStore';
-import { FunctionFragment } from 'ethers/lib/utils';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
 import NoFunctionItem from './NoFunctionItem';
@@ -28,11 +27,17 @@ const FunctionItem = styled(Item)(({ theme }) => ({
 }));
 
 const FunctionsList: FC<Props> = () => {
-  const [interactedFns, setInteractedFns] = useState<FunctionFragment[]>([]);
-
-  const { selectedContract, fnInView, setFnInView } = useRootStore(
+  const {
+    selectedContract,
+    interactedFns,
+    // setInteractedFns,
+    fnInView,
+    setFnInView,
+  } = useRootStore(
     useShallow((store) => ({
       selectedContract: store.selectedContract,
+      interactedFns: store.interactedFns,
+      setInteractedFns: store.setInteractedFns,
       fnInView: store.fnInView,
       setFnInView: store.setFnInView,
     })),
@@ -42,20 +47,13 @@ const FunctionsList: FC<Props> = () => {
     ? Object.values(selectedContract?.abi.functions)
     : [];
 
-  const onSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
+  const onInteract = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name: _name, checked: _a } = event.target;
 
-    const interactedFn = functions.find((fn) => fn.name === name);
+    // const interactedFn = functions.find((fn) => fn.name === name);
 
-    if (interactedFn) {
-      if (checked) {
-        setInteractedFns((prev) => [...prev, interactedFn]);
-      } else {
-        setInteractedFns((prev) =>
-          prev.filter((p) => interactedFn.name !== p.name),
-        );
-      }
-    }
+    //TO DO
+    // setInteractedFns()
   };
 
   const handleSelectToView = (SelectedFunctionName: string) => () => {
@@ -63,7 +61,9 @@ const FunctionsList: FC<Props> = () => {
       (func) => func.name === SelectedFunctionName,
     );
 
-    setFnInView(functionSelected);
+    if (functionSelected) {
+      setFnInView(functionSelected);
+    }
   };
 
   if (functions.length === 0) {
@@ -80,7 +80,7 @@ const FunctionsList: FC<Props> = () => {
         const inViewClassName =
           fnInView && fnInView.name === fn.name ? 'inView' : '';
         const isInteracted = !!interactedFns.find(
-          (_fn) => _fn.name === fn.name,
+          (_fn) => _fn.info.name === fn.name,
         );
 
         return (
@@ -92,7 +92,7 @@ const FunctionsList: FC<Props> = () => {
             <Checkbox
               checked={isInteracted}
               name={fn.name}
-              onChange={onSelect}
+              onChange={onInteract}
             />
             <Typography variant='title1' className='Function-name'>
               {fn.name}

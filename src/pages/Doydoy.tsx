@@ -18,6 +18,7 @@ interface Props {}
 
 const Doydoy: FC<Props> = () => {
   const { account: walletAccount, chainId } = useWeb3React();
+
   const [setAccount, setNetwork] = useRootStore(
     useShallow((store) => [store.setAccount, store.setNetwork]),
   );
@@ -25,7 +26,6 @@ const Doydoy: FC<Props> = () => {
   useEffect(() => {
     setAccount(walletAccount?.toLowerCase());
     if (chainId) {
-      console.log('>> Check | chainId:', chainId);
       const network: Network = {
         id: chainId,
         name: getNetworkName(chainId),
@@ -56,7 +56,7 @@ const Doydoy: FC<Props> = () => {
         ethereum.removeListener('chainChanged', networkChangedListener);
       };
     }
-  }, []);
+  }, [setNetwork]);
 
   return (
     <MainLayout>
