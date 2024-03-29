@@ -11,6 +11,7 @@ const Icon = (props: BoxProps) => {
         borderColor: 'common.black',
         borderRadius: '2px',
         boxShadow: 1,
+        backgroundColor: 'common.white',
         ...props.sx,
       }}
     />

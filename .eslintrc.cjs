@@ -52,5 +52,6 @@ module.exports = {
     'import/no-named-as-default': 'error',
     'import/no-unresolved': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-console': ['warn'],
   },
 };

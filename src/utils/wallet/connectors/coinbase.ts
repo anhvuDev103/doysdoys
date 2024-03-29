@@ -1,4 +1,4 @@
-import { NETWORK_ID_KEY } from '@constants/localStorage';
+import { LAST_CONNECTED_NETWORK_ID_KEY } from '@constants/localStorage';
 import { getLocalStorage } from '@utils/localStorage';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import { initializeConnector } from '@web3-react/core';
@@ -8,7 +8,8 @@ import { Connection, ConnectionType, onConnectionError } from '../connections';
 
 export function buildCoinbaseWalletConnector() {
   const networkId =
-    getLocalStorage<number>(NETWORK_ID_KEY) || MAINNET_NETWORK_ID;
+    getLocalStorage<number>(LAST_CONNECTED_NETWORK_ID_KEY) ||
+    MAINNET_NETWORK_ID;
 
   const [web3CoinbaseWallet, web3CoinbaseWalletHooks] =
     initializeConnector<CoinbaseWallet>(

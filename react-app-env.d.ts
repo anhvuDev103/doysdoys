@@ -1,9 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type MetamaskEvents =
+  | 'accountsChanged'
+  | 'chainChanged'
+  | 'chainChanged'
+  | 'connect'
+  | 'disconnect'
+  | 'message';
+
 interface Window {
   ethereum?: {
-    // value that is populated and returns true by the Coinbase Wallet mobile dapp browser
-    isCoinbaseWallet?: true;
-    isMetaMask?: true;
-    autoRefreshOnNetworkChange?: boolean;
-    isBraveWallet?: true;
+    isCoinbaseWallet: boolean;
+    isMetaMask: boolean;
+    autoRefreshOnNetworkChange: boolean;
+    isBraveWallet: boolean;
+    on: (event: MetamaskEvents, handler: (args: any) => void) => void;
+    removeListener: (
+      event: MetamaskEvents,
+      handler: (args: any) => void,
+    ) => void;
   };
 }

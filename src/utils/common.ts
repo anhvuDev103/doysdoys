@@ -28,3 +28,6 @@ export const generateName = () => {
     .join('');
   return name;
 };
+
+export const isSnakecaseAndUppercase = (str: string) =>
+  /^[A-Z0-9_]*$/.test(str);

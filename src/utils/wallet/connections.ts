@@ -68,10 +68,7 @@ export const switchNetwork = async (
 
   const { connector } = getConnection(connectionType);
 
-  if (
-    connectionType === ConnectionType.WALLET_CONNECT
-    // || connectionType === ConnectionType.NETWORK
-  ) {
+  if (connectionType === ConnectionType.WALLET_CONNECT) {
     await connector.activate(networkId);
     return;
   }

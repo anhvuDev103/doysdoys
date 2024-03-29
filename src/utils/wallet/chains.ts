@@ -1,4 +1,4 @@
-import { NetworkId, NetworkInfoMap } from '@utils/types';
+import { NetworkId, NetworkInfo, NetworkInfoMap } from '@utils/types';
 import * as chains from '@wagmi/chains';
 
 export const MAINNET_NETWORK_ID = 1;
@@ -34,6 +34,6 @@ export const getNetworkName = (networkId: NetworkId) => {
   return CHAINS[networkId]?.name;
 };
 
-export const getNetwork = (networkId: NetworkId) => {
-  return CHAINS[networkId] || undefined;
+export const getNetwork = (networkId: NetworkId): NetworkInfo | undefined => {
+  return CHAINS[networkId];
 };

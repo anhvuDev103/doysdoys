@@ -1,4 +1,3 @@
-import NetworkDrawer from '@components/primitives/NetworkDrawer';
 import { Box } from '@mui/material';
 
 const Result = () => {
@@ -8,7 +7,7 @@ const Result = () => {
         padding: 6,
       }}
     >
-      <NetworkDrawer />
+      Network
     </Box>
   );
 };

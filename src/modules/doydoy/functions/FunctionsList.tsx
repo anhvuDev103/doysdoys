@@ -1,8 +1,10 @@
 import { Item, List } from '@components/List';
 import { Checkbox, styled, Typography } from '@mui/material';
 import useRootStore from '@stores/rootStore';
+import { isSnakecaseAndUppercase } from '@utils/common';
 import { FunctionFragment } from 'ethers';
 import { FC, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 import NoFunctionItem from './NoFunctionItem';
 
@@ -13,26 +15,68 @@ const FunctionItem = styled(Item)(({ theme }) => ({
   alignItems: 'center',
   gap: theme.spacing(4),
   padding: '12px 20px',
+
+  '&.inView': {
+    backgroundColor: theme.palette.common.purple,
+    backgroundImage: `radial-gradient(white 1px, transparent 0)`,
+    backgroundSize: '18px 18px',
+    backgroundPosition: '-19px -19px',
+
+    '& .Function-name': {
+      backgroundColor: theme.palette.common.purple,
+    },
+  },
 }));
 
 const FunctionsList: FC<Props> = () => {
-  const [selectedNames, setSelectedNames] = useState<string[]>([]);
+  const [interactedFns, setInteractedFns] = useState<FunctionFragment[]>([]);
 
-  const selectedContract = useRootStore((store) => store.selectedContract);
-
-  const functions = [] as FunctionFragment[];
-  selectedContract?.abi.forEachFunction(
-    (func) => func.constant && functions.push(func),
+  const { selectedContract, fnInView, setFnInView } = useRootStore(
+    useShallow((store) => ({
+      selectedContract: store.selectedContract,
+      fnInView: store.fnInView,
+      setFnInView: store.setFnInView,
+    })),
   );
+  console.log('>> Check | fnInView:', fnInView);
+
+  let functions = [] as FunctionFragment[];
+  const snakecaseAndUppercaseFunctions = [] as FunctionFragment[];
+
+  selectedContract?.abi.forEachFunction((func) => {
+    if (func.constant) {
+      if (isSnakecaseAndUppercase(func.name)) {
+        snakecaseAndUppercaseFunctions.push(func);
+      } else {
+        functions.push(func);
+      }
+    }
+  });
+
+  functions = [...snakecaseAndUppercaseFunctions, ...functions];
 
   const onSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
 
-    if (checked) {
-      setSelectedNames((prev) => [...prev, name]);
-    } else {
-      setSelectedNames((prev) => prev.filter((p) => p !== name));
+    const interactedFn = functions.find((fn) => fn.name === name);
+
+    if (interactedFn) {
+      if (checked) {
+        setInteractedFns((prev) => [...prev, interactedFn]);
+      } else {
+        setInteractedFns((prev) =>
+          prev.filter((p) => interactedFn.name !== p.name),
+        );
+      }
     }
+  };
+
+  const handleSelectToView = (SelectedFunctionName: string) => () => {
+    const functionSelected = functions.find(
+      (func) => func.name === SelectedFunctionName,
+    );
+
+    setFnInView(functionSelected);
   };
 
   if (functions.length === 0) {
@@ -45,16 +89,30 @@ const FunctionsList: FC<Props> = () => {
         boxShadow: 1,
       }}
     >
-      {functions.map((func) => (
-        <FunctionItem key={func.name}>
-          <Checkbox
-            checked={selectedNames.includes(func.name)}
-            name={func.name}
-            onChange={onSelect}
-          />
-          <Typography variant='title1'>{func.name}</Typography>
-        </FunctionItem>
-      ))}
+      {functions.map((fn) => {
+        const inViewClassName =
+          fnInView && fnInView.name === fn.name ? 'inView' : '';
+        const isInteracted = !!interactedFns.find(
+          (_fn) => _fn.name === fn.name,
+        );
+
+        return (
+          <FunctionItem
+            key={fn.name}
+            className={inViewClassName}
+            onClick={handleSelectToView(fn.name)}
+          >
+            <Checkbox
+              checked={isInteracted}
+              name={fn.name}
+              onChange={onSelect}
+            />
+            <Typography variant='title1' className='Function-name'>
+              {fn.name}
+            </Typography>
+          </FunctionItem>
+        );
+      })}
     </List>
   );
 };

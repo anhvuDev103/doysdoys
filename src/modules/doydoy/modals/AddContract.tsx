@@ -2,11 +2,14 @@ import { BasicInput } from '@components/Input';
 import BasicModal from '@components/Modal/BasicModal';
 import { Column, Row } from '@components/primitives';
 import NetworkDrawer from '@components/primitives/NetworkDrawer';
+import { LAST_CONNECTED_NETWORK_ID_KEY } from '@constants/localStorage';
 import Contract, { ContractType } from '@models/Contract';
 import { Button, PaperProps, Typography } from '@mui/material';
 import useRootStore from '@stores/rootStore';
 import { generateName } from '@utils/common';
-import { BlurEvent, InputEvent } from '@utils/types';
+import { getLocalStorage } from '@utils/localStorage';
+import { BlurEvent, InputEvent, NetworkId, NetworkInfo } from '@utils/types';
+import { getNetwork } from '@utils/wallet/chains';
 import { isAddress } from 'ethers';
 import { FC, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
@@ -74,14 +77,6 @@ const AddContract: FC<Props> = ({ ...props }) => {
     }));
   };
 
-  // const handleSelect = (network: NetworkInfo) => {
-  //   console.log('>> Check | handleSelect | network:', network);
-  //   setAddContractForm((prev) => ({
-  //     ...prev,
-  //     networkId: network.id,
-  //   }));
-  // };
-
   const handleAddContract = () => {
     const error: AddContractError = {
       address: getAddressError(addContractForm['address']),
@@ -137,13 +132,32 @@ const AddContract: FC<Props> = ({ ...props }) => {
     value: addContractForm[name],
   });
 
+  const handleChangeNetwork = (newNetwork: NetworkInfo) => {
+    setAddContractForm((prev) => ({
+      ...prev,
+      networkId: newNetwork.id,
+    }));
+  };
+
+  let selectedNetwork = getNetwork(addContractForm.networkId);
+  if (!selectedNetwork) {
+    const lastConnectedNetworkId = getLocalStorage<NetworkId>(
+      LAST_CONNECTED_NETWORK_ID_KEY,
+    );
+
+    selectedNetwork = getNetwork(lastConnectedNetworkId);
+  }
+
   const isValidForm =
     Object.values(addContractError).filter(Boolean).length === 0;
 
   return (
     <BasicModal label='Add Contract' {...props}>
       <BasicModal.Body>
-        <NetworkDrawer>
+        <NetworkDrawer
+          network={selectedNetwork}
+          setNetwork={handleChangeNetwork}
+        >
           <Button
             variant='green'
             size='small'
@@ -152,7 +166,7 @@ const AddContract: FC<Props> = ({ ...props }) => {
             }}
           >
             <Typography variant='title2Bold' color='common.white'>
-              FANTOM
+              {selectedNetwork?.name}
             </Typography>
           </Button>
         </NetworkDrawer>

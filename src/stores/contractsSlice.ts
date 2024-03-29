@@ -31,13 +31,12 @@ export const createContractsSlice: StateCreator<
     contracts: contractInstances || [],
     addContract: (contract: Contract) => {
       set((state) => ({ contracts: [contract, ...state.contracts] }));
-      setLocalStorage(CONTRACTS_KEY, get().contracts);
+      setLocalStorage<Contract[]>(CONTRACTS_KEY, get().contracts);
     },
     removeContract: (id: string) => {
       set((state) => ({
         contracts: state.contracts.filter((contract) => contract.id !== id),
       }));
-      setLocalStorage(CONTRACTS_KEY, get().contracts);
     },
     clearContracts: () => {
       set({
