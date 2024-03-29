@@ -1,5 +1,5 @@
 import { NetworkId } from '@utils/types';
-import { Interface } from 'ethers';
+import { Interface } from 'ethers/lib/utils';
 
 export type ContractType = {
   address: string;

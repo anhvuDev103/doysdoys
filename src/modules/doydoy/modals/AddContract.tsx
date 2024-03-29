@@ -10,7 +10,7 @@ import { generateName } from '@utils/common';
 import { getLocalStorage } from '@utils/localStorage';
 import { BlurEvent, InputEvent, NetworkId, NetworkInfo } from '@utils/types';
 import { getNetwork } from '@utils/wallet/chains';
-import { isAddress } from 'ethers';
+import { isAddress } from 'ethers/lib/utils';
 import { FC, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -37,7 +37,6 @@ const AddContract: FC<Props> = ({ ...props }) => {
     name: generateName(),
     networkId: 0,
   });
-  console.log('>> Check | addContractForm:', addContractForm);
   const [addContractError, setAddContractError] = useState<AddContractError>({
     address: null,
     abi: null,
@@ -107,7 +106,7 @@ const AddContract: FC<Props> = ({ ...props }) => {
   function getAddressError(value?: string) {
     const baseError = getBaseInputError(value);
     if (baseError) return baseError;
-    if (!isAddress(value)) return 'Invalid address';
+    if (!isAddress(value!)) return 'Invalid address';
     return null;
   }
 

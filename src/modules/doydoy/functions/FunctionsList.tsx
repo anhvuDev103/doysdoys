@@ -1,8 +1,7 @@
 import { Item, List } from '@components/List';
 import { Checkbox, styled, Typography } from '@mui/material';
 import useRootStore from '@stores/rootStore';
-import { isSnakecaseAndUppercase } from '@utils/common';
-import { FunctionFragment } from 'ethers';
+import { FunctionFragment } from 'ethers/lib/utils';
 import { FC, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -38,22 +37,10 @@ const FunctionsList: FC<Props> = () => {
       setFnInView: store.setFnInView,
     })),
   );
-  console.log('>> Check | fnInView:', fnInView);
 
-  let functions = [] as FunctionFragment[];
-  const snakecaseAndUppercaseFunctions = [] as FunctionFragment[];
-
-  selectedContract?.abi.forEachFunction((func) => {
-    if (func.constant) {
-      if (isSnakecaseAndUppercase(func.name)) {
-        snakecaseAndUppercaseFunctions.push(func);
-      } else {
-        functions.push(func);
-      }
-    }
-  });
-
-  functions = [...snakecaseAndUppercaseFunctions, ...functions];
+  const functions = selectedContract
+    ? Object.values(selectedContract?.abi.functions)
+    : [];
 
   const onSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;

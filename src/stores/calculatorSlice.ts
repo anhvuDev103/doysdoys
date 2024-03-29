@@ -1,4 +1,4 @@
-import { FunctionFragment } from 'ethers';
+import { FunctionFragment } from 'ethers/lib/utils';
 import { StateCreator } from 'zustand';
 
 import { RootStore } from './rootStore';
